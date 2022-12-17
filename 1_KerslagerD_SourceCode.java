@@ -8,15 +8,15 @@ import java.util.stream.IntStream;
  * Java: 17.0.4.1 6.12.2022
  */
 public class SemestralniPraceKerslagerDan {
+    static Scanner nextval = new Scanner(System.in);
     public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int menu = 3;
+        int menu = -1;
         while (menu !=0){
             System.out.println("Jaký program si přejete spustit?");
             System.out.println("1 - Vánoční úloha");
             System.out.println("2 - Semestrální práce 1, nejdelší setříděná část v zadané posloupnosti");
             System.out.println("0 - Konec");
-            menu = sc.nextInt();
+            menu = getNextValue(Integer.class);
             switch (menu){
                 case 1 -> christmas();
                 case 2 -> posloupnostMenu();
@@ -28,20 +28,44 @@ public class SemestralniPraceKerslagerDan {
         This method is a menu and input for method posloupnost, which finds longest sorted subset in a given set and outputs them using System.out.print.
         */
         Scanner sc = new Scanner(System.in);
-        int members=2;
-        while (members>1){
+        int members=1;
+        while (true){
             System.out.println("Zadej počet členů: ");
-            members = sc.nextInt();
+            members = getNextValue(Integer.class);
+            if (members<1){break;}
             //array inicialization and declaration from input
-            int[] field = new int[members];
+            float[] field = new float[members];
             System.out.println("Zadej posloupnost: ");
             for (int i =0;i<field.length;i++){
-                field[i] = sc.nextInt();
+                field[i] = getNextValue(Float.class);
             }
             posloupnost(field);
         }
     }
-    public static void posloupnost(int[] field){
+    public static <T> T getNextValue(Class<T> clazz) {
+        /*
+        This method outputs a Scanner input of a requested class.
+        Method for threating wrong input class. Outputs request for value reentry when error would occur. Developed with OpenAi GPT3. (While procrastinating making presentation about this code)
+        Localized for input classes of int, float and string. Can be expanded.
+        */
+        while (true) {
+            try {
+              if (clazz == Integer.class) {
+                return (T) Integer.valueOf(nextval.nextInt());
+              } else if (clazz == Float.class) {
+                return (T) Float.valueOf(nextval.nextFloat());
+              } else if (clazz == String.class) {
+                return (T) nextval.nextLine();
+              } else {
+                throw new IllegalArgumentException("Invalid type");
+              }
+            } catch (Exception e) {
+              System.out.println("Špatný vstup, zadejte vadnou hodnotu a následující hodnoty prosím znovu.");
+              nextval.nextLine();
+            }
+        }
+    }
+    public static void posloupnost(float[] field){
         /*
         This method finds longest sorted subset in a given set and outputs them using System.out.print
         */
@@ -68,8 +92,8 @@ public class SemestralniPraceKerslagerDan {
                 else {len=1;}
                 //value changes evaluation
                 wasRaising=raising;
-                if (len>maxlen){maxlen=len;start=i-maxlen+2;}
             }
+            if (len>maxlen){maxlen=len;start=i-maxlen+2;}
         }
         //out
         System.out.println("Nejdelsi setridena cast delky: "+maxlen);
@@ -81,11 +105,10 @@ public class SemestralniPraceKerslagerDan {
         This method prints out a parametric image of city with snow. Parameters are the amount of houses and the amount of snow.
         */
         //in
-        Scanner sc = new Scanner(System.in);
         System.out.println("kolik je domečků?");
-        int domy = sc.nextInt();
+        int domy = getNextValue(Integer.class);
         System.out.println("jak moc sněží?(číslo)");
-        int sněžení = sc.nextInt();
+        int sněžení = getNextValue(Integer.class);
         //assets
         String[] house = {"            ","            ","   \\         ","   ))        "," .-#-----.   ","/_________\\  "," |[] _ []|   ",".|  |*|  |.  "};
         String[][] hous={{},{},{},{},{},{},{},{}};
