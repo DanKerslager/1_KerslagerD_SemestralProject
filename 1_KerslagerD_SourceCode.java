@@ -27,8 +27,8 @@ public class SemestralniPraceKerslagerDan {
         /*
         This method is a menu and input for method posloupnost, which finds longest sorted subset in a given set and outputs them using System.out.print.
         */
-        Scanner sc = new Scanner(System.in);
-        int members=1;
+        int members;
+        int[] out = new int[2];
         while (true){
             System.out.println("Zadej počet členů: ");
             members = getNextValue(Integer.class);
@@ -39,42 +39,22 @@ public class SemestralniPraceKerslagerDan {
             for (int i =0;i<field.length;i++){
                 field[i] = getNextValue(Float.class);
             }
-            posloupnost(field);
+            out = posloupnost(field);
+            System.out.println("Nejdelsi setridena cast delky: "+out[0]);
+            System.out.println("Zacatek "+out[1]+". prvek");
+            System.out.println();
         }
     }
-    public static <T> T getNextValue(Class<T> clazz) {
+     public static int[] posloupnost(float[] field){
         /*
-        This method outputs a Scanner input of a requested class.
-        Method for threating wrong input class. Outputs request for value reentry when error would occur. Developed with OpenAi GPT3. (While procrastinating making presentation about this code)
-        Localized for input classes of int, float and string. Can be expanded.
-        */
-        while (true) {
-            try {
-              if (clazz == Integer.class) {
-                return (T) Integer.valueOf(nextval.nextInt());
-              } else if (clazz == Float.class) {
-                return (T) Float.valueOf(nextval.nextFloat());
-              } else if (clazz == String.class) {
-                return (T) nextval.nextLine();
-              } else {
-                throw new IllegalArgumentException("Invalid type");
-              }
-            } catch (Exception e) {
-              System.out.println("Špatný vstup, zadejte vadnou hodnotu a následující hodnoty prosím znovu.");
-              nextval.nextLine();
-            }
-        }
-    }
-    public static void posloupnost(float[] field){
-        /*
-        This method finds longest sorted subset in a given set and outputs them using System.out.print
+        This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of subset, out[1] = start of longest subset
         */
         int i=0;
-        int maxlen = 1;
         int len = 1;
-        int start = 1;
         int raising;
         int wasRaising=-1;
+        int[] out = new int[2];
+        out[0] = 1;out[1]=1;
         while (i<field.length-1){
             //equality case
             if (field[i]==field[i+1]){len++;i++;}
@@ -93,12 +73,10 @@ public class SemestralniPraceKerslagerDan {
                 //value changes evaluation
                 wasRaising=raising;
             }
-            if (len>maxlen){maxlen=len;start=i-maxlen+2;}
+            if (len>out[0]){out[0]=len;out[1]=i-out[0]+2;}
         }
         //out
-        System.out.println("Nejdelsi setridena cast delky: "+maxlen);
-        System.out.println("Zacatek "+start+". prvek");
-        System.out.println();
+        return out;
     }
     public static void christmas(){
         /*
@@ -151,4 +129,27 @@ public class SemestralniPraceKerslagerDan {
                 
             System.out.println();}
         }   
+    public static <T> T getNextValue(Class<T> clazz) {
+        /*
+        This method outputs a Scanner input of a requested class.
+        Method for threating wrong input class. Outputs request for value reentry when error would occur. Developed with OpenAi GPT3. (While procrastinating making presentation about this code)
+        Localized for input classes of int, float and string. Can be expanded.
+        */
+        while (true) {
+            try {
+              if (clazz == Integer.class) {
+                return (T) Integer.valueOf(nextval.nextInt());
+              } else if (clazz == Float.class) {
+                return (T) Float.valueOf(nextval.nextFloat());
+              } else if (clazz == String.class) {
+                return (T) nextval.nextLine();
+              } else {
+                throw new IllegalArgumentException("Invalid type");
+              }
+            } catch (Exception e) {
+              System.out.println("Špatný vstup, zadejte vadnou hodnotu a následující hodnoty prosím znovu.");
+              nextval.nextLine();
+            }
+        }
+    }
 }
