@@ -47,18 +47,18 @@ public class SemestralniPraceKerslagerDan {
         }
     }
     /**
-     * This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of longest subset, out[1] = start of longest subset
-     * @param field
-     * @return 
+     * This method finds longest sorted subset in a given set and outputs them as an array 
+     * @param field => given set
+     * @return      => out[0] = length of longest subset, out[1] = start of longest subset
      */
     public static int[] posloupnost(float[] field){
         int i=0;
         int len = 1; //length of current sorted subset
-        int ascending = 1;
-        int descending =0;
-        int defaultType = -1;
+        final int ASCENDING = 1;
+        final int DESCENDING =0;
+        final int DEFAULTTYPE = -1;
         int curSeqType;
-        int seqType=defaultType;
+        int seqType=DEFAULTTYPE;
         int[] out = new int[2];
         out[0] = 1;out[1]=1;
         while (i<field.length-1){
@@ -66,9 +66,9 @@ public class SemestralniPraceKerslagerDan {
             if (field[i]==field[i+1]){len++;i++;}
             else{
                 //comparison
-                curSeqType = (field[i]>field[i+1])?descending:ascending; 
+                curSeqType = (field[i]>field[i+1])?DESCENDING:ASCENDING; 
                 //first num exception
-                if (seqType == defaultType){
+                if (seqType == DEFAULTTYPE){
                     seqType=curSeqType;
                 }
                 //comparison evaluation
