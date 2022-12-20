@@ -45,33 +45,33 @@ public class SemestralniPraceKerslagerDan {
             System.out.println();
         }
     }
-     public static int[] posloupnost(float[] field){
+    public static int[] posloupnost(float[] field){
         /*
-        This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of subset, out[1] = start of longest subset
+        This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of longest subset, out[1] = start of longest subset
         */
         int i=0;
-        int len = 1;
-        int raising;
-        int wasRaising=-1;
+        int len = 1; //length of current sorted subset
+        int curSeqType;//seq type 0 =>descending, 1=>ascending
+        int seqType=-1;
         int[] out = new int[2];
         out[0] = 1;out[1]=1;
         while (i<field.length-1){
             //equality case
             if (field[i]==field[i+1]){len++;i++;}
-            
             else{
                 //comparison
-                if (field[i]>field[i+1]){raising = 0;}
-                else /*if (field[i]<field[i+1])*/{raising = 1;}
+                curSeqType = (field[i]>field[i+1])?0:1; 
                 //first num exception
-                if (wasRaising == -1){wasRaising=raising;}
+                if (seqType == -1){
+                    seqType=curSeqType;
+                }
                 //comparison evaluation
-                if (raising == wasRaising){
+                if (curSeqType == seqType){
                     len++;i++;
                 }
                 else {len=1;}
                 //value changes evaluation
-                wasRaising=raising;
+                seqType=curSeqType;
             }
             if (len>out[0]){out[0]=len;out[1]=i-out[0]+2;}
         }
