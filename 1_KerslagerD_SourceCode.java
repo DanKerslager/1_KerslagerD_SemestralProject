@@ -20,13 +20,14 @@ public class SemestralniPraceKerslagerDan {
             switch (menu){
                 case 1 -> christmas();
                 case 2 -> posloupnostMenu();
+                //default
             }
         }
     }
+    /**
+     * This method is a menu and input for method posloupnost, which finds longest sorted subset in a given set and outputs them using System.out.print.
+     */
     public static void posloupnostMenu() {
-        /*
-        This method is a menu and input for method posloupnost, which finds longest sorted subset in a given set and outputs them using System.out.print.
-        */
         int members;
         int[] out = new int[2];
         while (true){
@@ -45,14 +46,19 @@ public class SemestralniPraceKerslagerDan {
             System.out.println();
         }
     }
+    /**
+     * This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of longest subset, out[1] = start of longest subset
+     * @param field
+     * @return 
+     */
     public static int[] posloupnost(float[] field){
-        /*
-        This method finds longest sorted subset in a given set and outputs them as an array out[0] = length of longest subset, out[1] = start of longest subset
-        */
         int i=0;
         int len = 1; //length of current sorted subset
-        int curSeqType;//seq type 0 =>descending, 1=>ascending
-        int seqType=-1;
+        int ascending = 1;
+        int descending =0;
+        int defaultType = -1;
+        int curSeqType;
+        int seqType=defaultType;
         int[] out = new int[2];
         out[0] = 1;out[1]=1;
         while (i<field.length-1){
@@ -60,9 +66,9 @@ public class SemestralniPraceKerslagerDan {
             if (field[i]==field[i+1]){len++;i++;}
             else{
                 //comparison
-                curSeqType = (field[i]>field[i+1])?0:1; 
+                curSeqType = (field[i]>field[i+1])?descending:ascending; 
                 //first num exception
-                if (seqType == -1){
+                if (seqType == defaultType){
                     seqType=curSeqType;
                 }
                 //comparison evaluation
@@ -78,10 +84,10 @@ public class SemestralniPraceKerslagerDan {
         //out
         return out;
     }
+    /**
+     * This method prints out a parametric image of city with snow. Parameters are the amount of houses and the amount of snow.
+     */
     public static void christmas(){
-        /*
-        This method prints out a parametric image of city with snow. Parameters are the amount of houses and the amount of snow.
-        */
         //in
         System.out.println("kolik je domečků?");
         int domy = getNextValue(Integer.class);
@@ -129,12 +135,15 @@ public class SemestralniPraceKerslagerDan {
                 
             System.out.println();}
         }   
+    /**
+     * This method outputs a Scanner input of a requested class.
+     *   Method for threating wrong input class. Outputs request for value reentry when error would occur. Developed with OpenAi GPT3. (While procrastinating making presentation about this code)
+     *   Localized for input classes of int, float and string. Can be expanded.
+     * @param <T>   => expected class of Scanner input
+     * @param clazz => expected class of Scanner input
+     * @return      => value of Scanner input of the required class
+     */
     public static <T> T getNextValue(Class<T> clazz) {
-        /*
-        This method outputs a Scanner input of a requested class.
-        Method for threating wrong input class. Outputs request for value reentry when error would occur. Developed with OpenAi GPT3. (While procrastinating making presentation about this code)
-        Localized for input classes of int, float and string. Can be expanded.
-        */
         while (true) {
             try {
               if (clazz == Integer.class) {
